@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\homeController;
+use App\Http\Controllers\PassengerController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,11 +17,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('home');
+    return redirect()->route('home');
 });
 
 Route::get('/dashboard', function () {
-    return view('home');
+    return redirect()->route('home');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -29,10 +30,20 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 
 Route::get('/adminDashboard', [homeController::class, 'adminDashboard'])
     ->name('adminDashboard')
+    ->middleware('can:adminPermission');
+
+Route::get('/chauffeurDashboard', [homeController::class, 'chauffeurDashboard'])
+    ->name('chauffeurDashboard')
     ->middleware('can:chauffeurPermission');
 
-// Route::get('/home', 'App\Http\Controllers\homeController@index')->name('home');
+Route::get('/passengerDashboard', [homeController::class, 'passengerDashboard'])
+    ->name('passengerDashboard')
+    ->middleware('can:userPermission');
+
+Route::get('/home', 'App\Http\Controllers\homeController@index')->name('home');
+Route::get('/add_horaire/{horaire}', 'App\Http\Controllers\homeController@add_horaire')->name('add_horaire');
+Route::get('/book_taxi/{id}', 'App\Http\Controllers\PassengerController@book_taxi')->name('book_taxi');

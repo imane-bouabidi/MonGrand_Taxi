@@ -103,6 +103,16 @@
                                     <a href="{{ route('adminDashboard') }}">Dashboard</a>
                                 @endcan
                             </li>
+                                <li>
+                                    @can('chauffeurPermission')
+                                    <a href="{{ route('chauffeurDashboard') }}">Dashboard</a>
+                                @endcan
+                            </li>
+                                <li>
+                                    @can('userPermission')
+                                    <a href="{{ route('passengerDashboard') }}">Dashboard</a>
+                                @endcan
+                            </li>
                             <li>
                                 <form action="{{ route('logout') }}" method="POST">
                                     @csrf
@@ -192,7 +202,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-10 offset-lg-1">
-                <form action="https://html.dynamiclayers.net/dl/ridek/book-ride.php" id="book-taxi-ride">
+                <form method="get" class="search-form" action="{{ url('search') }}">
                     <div class="taxi-booking-form">
                         <div class="form-field">
                             <i class="las la-user-friends"></i>
@@ -233,69 +243,31 @@
 <section class="our-taxi padding">
     <div class="container">
         <div class="row">
+            @foreach ($horaires_driver as $horaire_driver)                
             <div class="col-lg-4 col-md-6 sm-padding">
                 <div class="pricing-item">
                     <div class="pricing-head-wrap">
                         <div class="pricing-car">
-                            <img src="{{ asset('img/pricing-car.png') }}" alt="car">
-                            <div class="price">$2.50/km</div>
+                            <img src=" storage/{{$horaire_driver->driver->user->image }}" alt="car">
                         </div>
                     </div>
                     <div class="pricing-head">
-                        <h3><a href="taxi-details.html">BMW X5 2008</a></h3>
-                        <span class="location">Chicago</span>
+                        <h3><a href="taxi-details.html">{{ $horaire_driver->driver->taxi->type_vehicule }}</a></h3>
+                        <span class="location">{{ $horaire_driver->driver->trajet->depart->ville_name }} → {{ $horaire_driver->driver->trajet->arrivee->ville_name  }}</span>
+                        <br>
+                        <span class="location">{{ $horaire_driver->horaire->date }}</span>
                     </div>
                     <ul class="pricing-list">
-                        <li>Initial Charge: <span>$2.50</span></li>
-                        <li>Per Mile/KM: <span>$4.20</span></li>
-                        <li>Per Stopped Trafic: <span>$1.50</span></li>
+                        <li>Prix : <span>{{ $horaire_driver->driver->taxi->prix }} DH</span></li>
                         <li>Passengers: <span>4 Person</span></li>
-                        <li><a href="book-taxi.html" class="default-btn">Book Taxi Now</a></li>
+                        @can('userPermission')
+                        <li><a href="{{route('book_taxi',['id' => $horaire_driver->id])}}" class="default-btn">Book Taxi Now</a></li>
+                        @endcan
                     </ul>
                 </div>
             </div>
-            <div class="col-lg-4 col-md-6 sm-padding">
-                <div class="pricing-item">
-                    <div class="pricing-head-wrap">
-                        <div class="pricing-car">
-                            <img src="{{ asset('img/pricing-car.png') }}" alt="car">
-                            <div class="price">$3.50/km</div>
-                        </div>
-                    </div>
-                    <div class="pricing-head">
-                        <h3><a href="taxi-details.html">Mercedes‑Benz</a></h3>
-                        <span class="location">Florida</span>
-                    </div>
-                    <ul class="pricing-list">
-                        <li>Initial Charge: <span>$2.50</span></li>
-                        <li>Per Mile/KM: <span>$4.20</span></li>
-                        <li>Per Stopped Trafic: <span>$1.50</span></li>
-                        <li>Passengers: <span>4 Person</span></li>
-                        <li><a href="book-taxi.html" class="default-btn">Book Taxi Now</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 sm-padding">
-                <div class="pricing-item">
-                    <div class="pricing-head-wrap">
-                        <div class="pricing-car">
-                            <img src="{{ asset('img/pricing-car.png') }}" alt="car">
-                            <div class="price">$4.50/km</div>
-                        </div>
-                    </div>
-                    <div class="pricing-head">
-                        <h3><a href="taxi-details.html">Hyundai 2022</a></h3>
-                        <span class="location">New York</span>
-                    </div>
-                    <ul class="pricing-list">
-                        <li>Initial Charge: <span>$2.50</span></li>
-                        <li>Per Mile/KM: <span>$4.20</span></li>
-                        <li>Per Stopped Trafic: <span>$1.50</span></li>
-                        <li>Passengers: <span>4 Person</span></li>
-                        <li><a href="book-taxi.html" class="default-btn">Book Taxi Now</a></li>
-                    </ul>
-                </div>
-            </div>
+            @endforeach
+
         </div>
     </div>
 </section>
