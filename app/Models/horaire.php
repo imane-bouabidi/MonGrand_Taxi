@@ -20,4 +20,8 @@ class horaire extends Model
     {
         return $this->hasMany(Reservation::class);
     }
+    public function horaire_driver()
+    {
+        return $this->hasOne(horaire_driver::class);
+    }
 }

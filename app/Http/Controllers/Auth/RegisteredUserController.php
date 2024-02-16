@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\passager;
 use App\Models\User;
 use App\Models\ville;
 use App\Providers\RouteServiceProvider;
@@ -47,7 +48,6 @@ class RegisteredUserController extends Controller
             'image' => ['required','max:2048','mimes:jpeg,png,jpg,gif,svg'],
         ]);
     
-        // Créer l'utilisateur
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -55,7 +55,6 @@ class RegisteredUserController extends Controller
             'image' => $request->file('image')->store('users_images', 'public'),
         ]);
     
-        // Assigner le rôle
         if ($request->has('asChauffeur')){
             $role ='chauffeur';
             $permissionNom ='chauffeurPermission';
@@ -72,13 +71,10 @@ class RegisteredUserController extends Controller
             $userRole->givePermissionTo($permission);
         }
     
-        // Événement de création d'utilisateur
         event(new Registered($user));
     
-        // Connexion automatique de l'utilisateur après l'enregistrement
         Auth::login($user);
     
-        // Création du taxi si l'utilisateur est un chauffeur
         if ($request->has('asChauffeur')) {
             $taxi = taxi::create([
                 'immatricule' => $request->immatricule,
@@ -87,24 +83,25 @@ class RegisteredUserController extends Controller
                 'prix' => $request->prix,
             ]);
     
-            // Création du trajet si nécessaire
             $trajet = trajet::create([
                 'ville_dep_id' => $request->Ville_Dep,
                 'ville_arr_id' => $request->Ville_Arr,
             ]);
     
-            // Création du conducteur
-            $driver = driver::create([
-                'description' => $request->description, // Assurez-vous que cette donnée est présente dans votre formulaire
-                'type_paiement' => $request->type_paiement, // Assurez-vous que cette donnée est présente dans votre formulaire
-                'statut' => $request->statut, // Vous pouvez changer cela selon vos besoins
+            driver::create([
+                'description' => $request->description, 
+                'type_paiement' => $request->type_paiement, 
+                'statut' => $request->statut, 
                 'user_id' => $user->id,
                 'taxi_id' => $taxi->id,
                 'trajet_id' => $trajet->id,
             ]);
+        }else{
+            passager::create([
+                'user_id' => $user->id,
+            ]);
         }
     
-        // Rediriger l'utilisateur vers la page d'accueil après l'enregistrement
         return redirect()->route('home');
     }
     

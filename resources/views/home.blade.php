@@ -75,7 +75,7 @@
                     <div class="header-menu-wrap">
                         <ul class="nav-menu">
                             <li class="dropdown_menu">
-                                <a href="index.html">Home</a>
+                                <a href="{{route('home')}}">Home</a>
                                 <ul>
                                     <li><a href="index.html">Home Default</a></li>
                                     <li><a href="index-2.html">Home Modern</a></li>
@@ -204,16 +204,6 @@
             <div class="col-lg-10 offset-lg-1">
                 <form method="get" class="search-form" action="{{ url('search') }}">
                     <div class="taxi-booking-form">
-                        <div class="form-field">
-                            <i class="las la-user-friends"></i>
-                            <select name="passengers" id="passengers" class="niceSelect">
-                                <option value="1">1 Person</option>
-                                <option value="2">2 Person</option>
-                                <option value="3">3 Person</option>
-                                <option value="4">4 Person</option>
-                                <option value="5">5 Person</option>
-                            </select>
-                        </div>
                         <div class="form-field">
                             <i class="las la-map-marker"></i>
                             <input type="text" id="start-dest" name="start-dest" class="form-control"

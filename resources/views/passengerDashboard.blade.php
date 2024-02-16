@@ -94,7 +94,7 @@
                                             fill="white" fill-rule="evenodd" />
                                     </svg>
                                 </span>
-                                <span class="ml-2 text-sm tracking-wide truncate">Gestion des recettes</span>
+                                <span class="ml-2 text-sm tracking-wide truncate">Gestion des reservations</span>
                             </a>
                         </li>
                         <li>
@@ -120,7 +120,7 @@
 
                 <div class="mt-4 mx-4 ">
 
-                    <h1 class="text-center  m-10">Gestion Des horaires</h1>
+                    <h1 class="text-center  m-10">Gestion Des reservations</h1>
                     <!-- Client Table -->
                     <div class="mt-4 mx-4">
                         <div class="w-full overflow-hidden rounded-lg shadow-xs">
@@ -132,43 +132,69 @@
                                             <th class="px-4 py-3">Ville Depart</th>
                                             <th class="px-4 py-3">Ville Arrivée</th>
                                             <th class="px-4 py-3">Date</th>
+                                            <th class="px-4 py-3">Nom chauffeur</th>
+                                            <th class="px-4 py-3">immatricule</th>
+                                            <th class="px-4 py-3">Prix</th>
                                             <th class="px-4 py-3">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-                                        <form action="" method="GET">
-                                            <tr
-                                                class="bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-900 text-gray-700 dark:text-gray-400">
-                                                <td class="px-4 py-3">
-                                                    <div class="flex items-center text-sm">
-                                                        <div>
-
+                                        @foreach ($reservations as $reservation)
+                                            <form action="{{ route('annuler_reser', $reservation->id) }}"
+                                                method="GET">
+                                                <tr
+                                                    class="bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-900 text-gray-700 dark:text-gray-400">
+                                                    <td class="px-4 py-3">
+                                                        <div class="flex items-center text-sm">
+                                                            <div>
+                                                                {{ $reservation->horaire_driver->driver->trajet->depart->ville_name }}
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </td>
-                                                <td class="px-4 py-3">
-                                                    <div class="flex items-center text-sm">
-                                                        <div>
+                                                    </td>
+                                                    <td class="px-4 py-3">
+                                                        <div class="flex items-center text-sm">
+                                                            <div>
+                                                                {{ $reservation->horaire_driver->driver->trajet->arrivee->ville_name }}
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </td>
-                                                <td class="px-4 py-3 text-sm">
-                                                </td>
-                                                <td class="px-4 py-3">
-                                                    <div class="flex items-center text-sm">
-                                                        <div>
-                                                            @csrf
-                                                            <a href=""
-                                                                class="px-2 py-1 font-semibold leading-tight text-black-700 bg-green-100 rounded-full dark:bg-red-700 dark:text-red-100">
-                                                                <button type="submit">
-                                                                    Choisir
-                                                                </button>
-                                                            </a>
+                                                    </td>
+                                                    <td class="px-4 py-3 text-sm">
+                                                        {{ $reservation->horaire_driver->horaire->date }}
+                                                    </td>
+                                                    <td class="px-4 py-3 text-sm">
+                                                        {{ $reservation->passager->user->name }}
+                                                    </td>
+                                                    <td class="px-4 py-3 text-sm">
+                                                        {{ $reservation->horaire_driver->driver->taxi->immatricule }}
+                                                    </td>
+                                                    <td class="px-4 py-3 text-sm">
+                                                        {{ $reservation->horaire_driver->driver->taxi->prix }} DH
+                                                    </td>
+                                                    <td class="px-4 py-3">
+                                                        <div class="flex items-center text-sm">
+                                                            <div>
+                                                                @csrf
+                                                                @if ($reservation->cancelled == 0)
+                                                                    <a href=""
+                                                                        class="px-2 py-1 font-semibold leading-tight text-black-700 bg-green-100 rounded-full dark:bg-red-700 dark:text-red-100">
+                                                                        <button type="submit">
+                                                                            Annuler
+                                                                        </button>
+                                                                    </a>
+                                                                @else
+                                                                    <a href=""
+                                                                        class="px-2 py-1 font-semibold leading-tight text-black-700 bg-red-100 rounded-full dark:bg-red-700 dark:text-red-100">
+                                                                        <button>
+                                                                            Annulée
+                                                                        </button>
+                                                                    </a>
+                                                                @endif
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </form>
+                                                    </td>
+                                                </tr>
+                                            </form>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>

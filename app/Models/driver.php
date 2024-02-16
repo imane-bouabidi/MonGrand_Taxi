@@ -31,4 +31,8 @@ class driver extends Model
     {
         return $this->belongsToMany(Horaire::class, 'horaire_driver', 'driver_id', 'horaire_id')->withPivot('statut');
     }
+    public function horaire_driver()
+    {
+        return $this->belongsToMany(horaire_driver::class, 'horaire_driver', 'driver_id', 'horaire_id')->withPivot('statut');
+    }
 }

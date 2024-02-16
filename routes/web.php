@@ -40,10 +40,15 @@ Route::get('/chauffeurDashboard', [homeController::class, 'chauffeurDashboard'])
     ->name('chauffeurDashboard')
     ->middleware('can:chauffeurPermission');
 
-Route::get('/passengerDashboard', [homeController::class, 'passengerDashboard'])
+Route::get('/passengerDashboard', [PassengerController::class, 'passengerDashboard'])
     ->name('passengerDashboard')
     ->middleware('can:userPermission');
 
 Route::get('/home', 'App\Http\Controllers\homeController@index')->name('home');
 Route::get('/add_horaire/{horaire}', 'App\Http\Controllers\homeController@add_horaire')->name('add_horaire');
 Route::get('/book_taxi/{id}', 'App\Http\Controllers\PassengerController@book_taxi')->name('book_taxi');
+Route::get('/annuler_reser/{id}', 'App\Http\Controllers\PassengerController@annuler_reser')->name('annuler_reser');
+Route::get('/change_statut_driver', 'App\Http\Controllers\homeController@change_statut_driver')->name('change_statut_driver');
+Route::get('/afficher_reservations', 'App\Http\Controllers\homeController@afficher_reservations')->name('afficher_reservations');
+Route::get('/search',[homeController::class, 'search']);
+

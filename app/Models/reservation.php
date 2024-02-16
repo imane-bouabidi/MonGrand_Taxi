@@ -9,7 +9,7 @@ class reservation extends Model
 {
     use HasFactory;
     protected $table = 'reservation';
-    protected $fillable = ['date', 'nbr_places', 'rating', 'horaire_driver_id', 'passager_id'];
+    protected $fillable = ['date', 'nbr_places', 'rating', 'horaire_driver_id', 'passager_id','cancelled'];
 
     public function horaire()
     {
@@ -19,5 +19,9 @@ class reservation extends Model
     public function passager()
     {
         return $this->belongsTo(Passager::class);
+    }
+    public function horaire_driver()
+    {
+        return $this->belongsTo(horaire_driver::class);
     }
 }

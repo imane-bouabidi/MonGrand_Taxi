@@ -9,15 +9,15 @@ class passager extends Model
 {
     use HasFactory;
     protected $table = 'passager';
-    protected $fillable = ['user_id', 'reservation_id'];
+    protected $fillable = ['user_id'];
 
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    public function reservation()
+    public function reservations()
     {
-        return $this->belongsTo(Reservation::class);
+        return $this->hasMany(Reservation::class);
     }
 }
