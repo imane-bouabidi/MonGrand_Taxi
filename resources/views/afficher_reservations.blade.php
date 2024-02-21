@@ -24,6 +24,56 @@
             width: calc(100% - 16rem);
         }
     }
+
+    .rating-wrapper {
+        align-self: center;
+        box-shadow: 7px 7px 25px rgba(198, 206, 237, .7),
+            -7px -7px 35px rgba(255, 255, 255, .7),
+            inset 0px 0px 4px rgba(255, 255, 255, .9),
+            inset 7px 7px 15px rgba(198, 206, 237, .8);
+        border-radius: 5rem;
+        display: inline-flex;
+        direction: rtl !important;
+        padding: .6rem 2.5rem;
+        margin-left: auto;
+
+
+        label {
+            color: #E1E6F6;
+            cursor: pointer;
+            display: inline-flex;
+            font-size: 3rem;
+            padding: 1rem .6rem;
+            transition: color 0.5s;
+        }
+
+        svg {
+            -webkit-text-fill-color: transparent;
+            -webkit-filter: drop-shadow (4px 1px 6px rgba(198, 206, 237, 1));
+            filter: drop-shadow(5px 1px 3px rgba(198, 206, 237, 1));
+        }
+
+        input {
+            height: 100%;
+            width: 100%;
+        }
+
+        input {
+            display: none;
+        }
+
+        label:hover,
+        label:hover~label,
+        input:checked~label {
+            color: #34AC9E;
+        }
+
+        label:hover,
+        label:hover~label,
+        input:checked~label {
+            color: #34AC9E;
+        }
+    }
 </style>
 
 <body>
@@ -49,9 +99,6 @@
                                 Home
                             </a>
                         </li>
-                        <li>
-
-
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
                                 <a href="index.php?action=logOut"
@@ -84,7 +131,7 @@
                             </div>
                         </li>
                         <li>
-                            <a href=""
+                            <a href="{{ route('chauffeurDashboard') }}"
                                 class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-black dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-white dark:hover:border-gray-800 pr-6">
                                 <span class="inline-flex justify-center items-center ml-4">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="25px" height="25px"
@@ -94,22 +141,37 @@
                                             fill="white" fill-rule="evenodd" />
                                     </svg>
                                 </span>
-                                <span class="ml-2 text-sm tracking-wide truncate">Gestion des recettes</span>
+                                <span class="ml-2 text-sm tracking-wide truncate">Gestion des horaires</span>
                             </a>
                         </li>
-                        {{-- <li>
-                            <a href=""
+                        <li>
+                            <a href="{{ route('afficher_reservations') }}"
                                 class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-black dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-white dark:hover:border-gray-800 pr-6">
                                 <span class="inline-flex justify-center items-center ml-4">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="25px" height="25px"
-                                        viewBox="0 0 448 512">
-                                        <path fill="#ffffff"
-                                            d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zM200 344V280H136c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V168c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H248v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z" />
+                                        viewBox="0 0 24 24" fill="none">
+                                        <path clip-rule="evenodd"
+                                            d="m12 3.75c-4.55635 0-8.25 3.69365-8.25 8.25 0 4.5563 3.69365 8.25 8.25 8.25 4.5563 0 8.25-3.6937 8.25-8.25 0-4.55635-3.6937-8.25-8.25-8.25zm-9.75 8.25c0-5.38478 4.36522-9.75 9.75-9.75 5.3848 0 9.75 4.36522 9.75 9.75 0 5.3848-4.3652 9.75-9.75 9.75-5.38478 0-9.75-4.3652-9.75-9.75zm9.75-.75c.4142 0 .75.3358.75.75v3.5c0 .4142-.3358.75-.75.75s-.75-.3358-.75-.75v-3.5c0-.4142.3358-.75.75-.75zm0-3.25c-.5523 0-1 .44772-1 1s.4477 1 1 1h.01c.5523 0 1-.44772 1-1s-.4477-1-1-1z"
+                                            fill="white" fill-rule="evenodd" />
                                     </svg>
                                 </span>
-                                <span class="ml-2 text-sm tracking-wide truncate">Ajouter recette</span>
+                                <span class="ml-2 text-sm tracking-wide truncate">Listes des reservations</span>
                             </a>
-                        </li> --}}
+                        </li>
+                        <li>
+                            <a href="{{route('historique_driver')}}"
+                                class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-black dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-white dark:hover:border-gray-800 pr-6">
+                                <span class="inline-flex justify-center items-center ml-4">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="25px" height="25px"
+                                        viewBox="0 0 24 24" fill="none">
+                                        <path clip-rule="evenodd"
+                                            d="m12 3.75c-4.55635 0-8.25 3.69365-8.25 8.25 0 4.5563 3.69365 8.25 8.25 8.25 4.5563 0 8.25-3.6937 8.25-8.25 0-4.55635-3.6937-8.25-8.25-8.25zm-9.75 8.25c0-5.38478 4.36522-9.75 9.75-9.75 5.3848 0 9.75 4.36522 9.75 9.75 0 5.3848-4.3652 9.75-9.75 9.75-5.38478 0-9.75-4.3652-9.75-9.75zm9.75-.75c.4142 0 .75.3358.75.75v3.5c0 .4142-.3358.75-.75.75s-.75-.3358-.75-.75v-3.5c0-.4142.3358-.75.75-.75zm0-3.25c-.5523 0-1 .44772-1 1s.4477 1 1 1h.01c.5523 0 1-.44772 1-1s-.4477-1-1-1z"
+                                            fill="white" fill-rule="evenodd" />
+                                    </svg>
+                                </span>
+                                <span class="ml-2 text-sm tracking-wide truncate">Historique</span>
+                            </a>
+                        </li>
                     </ul>
                     <p class="mb-14 px-5 py-3 hidden md:block text-center text-xs">Copyright @2024</p>
                 </div>
@@ -133,41 +195,102 @@
                                             <th class="px-4 py-3">Date</th>
                                             <th class="px-4 py-3">ville depart</th>
                                             <th class="px-4 py-3">ville arrivee</th>
+                                            <th class="px-4 py-3">Statut</th>
+                                            <th class="px-4 py-3">Rating</th>
                                         </tr>
                                     </thead>
                                     <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
                                         @foreach ($reservations as $reservation)
-                                            <form action="" method="GET">
-                                                <tr
-                                                    class="bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-900 text-gray-700 dark:text-gray-400">
-                                                    <td class="px-4 py-3">
-                                                        <div class="flex items-center text-sm">
-                                                            <div>
-                                                                {{ $reservation->passager->users->name }}
+                                            <tr
+                                                class="bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-900 text-gray-700 dark:text-gray-400">
+                                                <td class="px-4 py-3">
+                                                    <div class="flex items-center text-sm">
+                                                        <div>
+                                                            {{ $reservation->passager->user->name }}
 
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="px-4 py-3">
+                                                    <div class="flex items-center text-sm">
+                                                        <div>
+                                                            {{ $reservation->horaire_driver->horaire->date }}
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="px-4 py-3 text-sm">
+                                                    {{ $reservation->horaire_driver->driver->trajet->depart->ville_name }}
+                                                </td>
+                                                <td class="px-4 py-3">
+                                                    <div class="flex items-center text-sm">
+                                                        {{ $reservation->horaire_driver->driver->trajet->arrivee->ville_name }}
+                                                    </div>
+                                                </td>
+                                                <td class="px-4 py-3 text-sm">
+                                                    <div class="flex items-center text-sm">
+                                                        {{ $reservation->horaire_driver->statut }}
+                                                    </div>
+                                                </td>
+                                                {{-- @if (in_array($reservation->horaire_driver->statut, ['done', 'annulee'])) --}}
+                                                <td class="px- py-3 text-sm">
+                                                    <form action="" method="GET">
+                                                        <div class="container-wrapper">
+                                                            <div
+                                                                class="container d-flex align-items-center justify-content-center">
+                                                                <div class="row justify-content-center">
+
+                                                                    <!-- star rating -->
+                                                                    <div class="rating-wrapper">
+
+                                                                        <!-- star 5 -->
+                                                                        <input type="radio" id="5-star-rating"
+                                                                            name="star-rating" value="5">
+                                                                        <label for="5-star-rating"
+                                                                            class="star-rating">
+                                                                            <i class="fas fa-star d-inline-block"></i>
+                                                                        </label>
+
+                                                                        <!-- star 4 -->
+                                                                        <input type="radio" id="4-star-rating"
+                                                                            name="star-rating" value="4">
+                                                                        <label for="4-star-rating"
+                                                                            class="star-rating star">
+                                                                            <i class="fas fa-star d-inline-block"></i>
+                                                                        </label>
+
+                                                                        <!-- star 3 -->
+                                                                        <input type="radio" id="3-star-rating"
+                                                                            name="star-rating" value="3">
+                                                                        <label for="3-star-rating"
+                                                                            class="star-rating star">
+                                                                            <i class="fas fa-star d-inline-block"></i>
+                                                                        </label>
+
+                                                                        <!-- star 2 -->
+                                                                        <input type="radio" id="2-star-rating"
+                                                                            name="star-rating" value="2">
+                                                                        <label for="2-star-rating"
+                                                                            class="star-rating star">
+                                                                            <i class="fas fa-star d-inline-block"></i>
+                                                                        </label>
+
+                                                                        <!-- star 1 -->
+                                                                        <input type="radio" id="1-star-rating"
+                                                                            name="star-rating" value="1">
+                                                                        <label for="1-star-rating"
+                                                                            class="star-rating star">
+                                                                            <i class="fas fa-star d-inline-block"></i>
+                                                                        </label>
+
+                                                                    </div>
+
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </td>
-                                                    <td class="px-4 py-3">
-                                                        <div class="flex items-center text-sm">
-                                                            <div>
-                                                                {{ $reservation->horaire_driver->horaire->date }}
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td class="px-4 py-3 text-sm">
-                                                        {{ $reservation->horaire_driver->driver->trajet->depart->ville_name }}
-                                                    </td>
-                                                    <td class="px-4 py-3 text-sm">
-
-                                                    </td>
-                                                    <td class="px-4 py-3">
-                                                        <div class="flex items-center text-sm">
-                                                            {{ $reservation->horaire_driver->driver->trajet->arrivee->ville_name }}
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            </form>
+                                                    </form>
+                                                </td>
+                                                {{-- @endif --}}
+                                            </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
@@ -179,7 +302,6 @@
             </div>
         </div>
     </div>
-
 </body>
 
 </html>

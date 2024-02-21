@@ -20,6 +20,6 @@ class horaire_driver extends Model
     }
     public function reservation()
     {
-        return $this->hasMany(reservation::class);
+        return $this->hasMany(reservation::class,'horaire_driver_id');
     }
 }

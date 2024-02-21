@@ -125,19 +125,6 @@
                                 <span class="ml-2 text-sm tracking-wide truncate">Historique</span>
                             </a>
                         </li>
-                        {{-- <li>
-                            <a href=""
-                                class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-black dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-white dark:hover:border-gray-800 pr-6">
-                                <span class="inline-flex justify-center items-center ml-4">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="25px" height="25px"
-                                        viewBox="0 0 448 512">
-                                        <path fill="#ffffff"
-                                            d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zM200 344V280H136c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V168c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H248v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z" />
-                                    </svg>
-                                </span>
-                                <span class="ml-2 text-sm tracking-wide truncate">Ajouter recette</span>
-                            </a>
-                        </li> --}}
                     </ul>
                     <p class="mb-14 px-5 py-3 hidden md:block text-center text-xs">Copyright @2024</p>
                 </div>
@@ -148,56 +135,8 @@
 
                 <div class="mt-4 mx-4 ">
 
-                    <h1 class="text-center  m-10">Votre disponibilité</h1>
-                    <!-- Client Table -->
-                    <div class="mt-4 mx-4">
-                        <div class="w-full overflow-hidden rounded-lg shadow-xs">
-                            <div class="w-full overflow-x-auto">
-                                <table class="w-full">
-                                    <thead>
-                                        <tr
-                                            class="text-xs font-semibold tracking-wide text-center text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                                            <th class="px-4 py-3">Vous etes :</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-                                        <form action="{{ route('change_statut_driver') }}" method="GET">
-                                            <tr
-                                                class="bg-gray-50 dark:bg-gray-800  hover:bg-gray-100 dark:hover:bg-gray-900 text-gray-700 dark:text-gray-400">
-                                                <td class="px-4 py-3 ">
-                                                    <div class="flex items-center justify-center">
-                                                        <div>
-                                                            @csrf
-                                                            @if ($driver->statut == 'disponible')
-                                                                <a href=""
-                                                                    class="px-2 py-1 font-semibold leading-tight text-black-700 bg-green-100 rounded-full dark:bg-red-700 dark:text-red-100">
-                                                                    <button type="submit">
-                                                                        Disponible
-                                                                    </button>
-                                                                </a>
-                                                            @else
-                                                                <a href=""
-                                                                    class="px-2 py-1 font-semibold leading-tight text-black-700 bg-red-100 rounded-full dark:bg-red-700 dark:text-red-100">
-                                                                    <button type="submit">
-                                                                        Non disponible
-                                                                    </button>
-                                                                </a>
-                                                            @endif
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </form>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <!-- ./Client Table -->
-                    </div>
-                </div>
-                <div class="mt-4 mx-4 ">
-
                     <h1 class="text-center  m-10">Gestion Des horaires</h1>
+                    <h2 class="text-center  m-10">Votre Rating actuel est :  {{$totalAverageRating}}</h2>
                     <!-- Client Table -->
                     <div class="mt-4 mx-4">
                         <div class="w-full overflow-hidden rounded-lg shadow-xs">
@@ -209,40 +148,34 @@
                                             <th class="px-4 py-3">Ville Depart</th>
                                             <th class="px-4 py-3">Ville Arrivée</th>
                                             <th class="px-4 py-3">Date</th>
-                                            <th class="px-4 py-3">Reservations</th>
                                             <th class="px-4 py-3">Statut</th>
-                                            <th class="px-4 py-3">Action</th>
+                                            <th class="px-4 py-3">Rating</th>
                                         </tr>
                                     </thead>
                                     <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-                                        @foreach ($horaires as $horaire)
-                                            <form action="{{ route('add_horaire', $horaire->id) }}" method="GET">
+                                        @foreach ($horaires_driver as $horaire_driver)
                                                 <tr
                                                     class="bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-900 text-gray-700 dark:text-gray-400">
                                                     <td class="px-4 py-3">
                                                         <div class="flex items-center text-sm">
                                                             <div>
-                                                                {{ $driver->trajet->depart->ville_name }}
-
+                                                                {{ $horaire_driver->driver->trajet->depart->ville_name }}
                                                             </div>
                                                         </div>
                                                     </td>
                                                     <td class="px-4 py-3">
                                                         <div class="flex items-center text-sm">
                                                             <div>
-                                                                {{ $driver->trajet->arrivee->ville_name }}
+                                                                {{ $horaire_driver->driver->trajet->arrivee->ville_name }}
                                                             </div>
                                                         </div>
                                                     </td>
                                                     <td class="px-4 py-3 text-sm">
-                                                        {{ $horaire->date }}
+                                                        {{ $horaire_driver->horaire->date }}
                                                     </td>
                                                     <td class="px-4 py-3 text-sm">
-
-                                                    </td>
-                                                    <td class="px-4 py-3 text-sm">
-                                                        @if (isset($horaire->horaire_driver))
-                                                            {{ $horaire->horaire_driver->statut }}
+                                                        @if (isset($horaire_driver))
+                                                            {{ $horaire_driver->horaire->horaire_driver->statut }}
                                                         @else
                                                             Statut non défini
                                                         @endif
@@ -250,18 +183,13 @@
                                                     <td class="px-4 py-3">
                                                         <div class="flex items-center text-sm">
                                                             <div>
-                                                                @csrf
-                                                                <a href=""
-                                                                    class="px-2 py-1 font-semibold leading-tight text-black-700 bg-green-100 rounded-full dark:bg-red-700 dark:text-red-100">
-                                                                    <button type="submit">
-                                                                        Choisir
-                                                                    </button>
-                                                                </a>
+                                                                @foreach ($horaire_driver->reservation as $reservation)
+                                                                {{ $reservation->rating }} / 5
+                                                                @endforeach 
                                                             </div>
                                                         </div>
                                                     </td>
                                                 </tr>
-                                            </form>
                                         @endforeach
                                     </tbody>
                                 </table>

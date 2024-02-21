@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\homeController;
 use App\Http\Controllers\PassengerController;
+use App\Http\Controllers\chauffeurController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -36,7 +37,7 @@ Route::get('/adminDashboard', [homeController::class, 'adminDashboard'])
     ->name('adminDashboard')
     ->middleware('can:adminPermission');
 
-Route::get('/chauffeurDashboard', [homeController::class, 'chauffeurDashboard'])
+Route::get('/chauffeurDashboard', [chauffeurController::class, 'chauffeurDashboard'])
     ->name('chauffeurDashboard')
     ->middleware('can:chauffeurPermission');
 
@@ -45,10 +46,11 @@ Route::get('/passengerDashboard', [PassengerController::class, 'passengerDashboa
     ->middleware('can:userPermission');
 
 Route::get('/home', 'App\Http\Controllers\homeController@index')->name('home');
-Route::get('/add_horaire/{horaire}', 'App\Http\Controllers\homeController@add_horaire')->name('add_horaire');
+Route::get('/add_horaire/{horaire}', 'App\Http\Controllers\chauffeurController@add_horaire')->name('add_horaire');
 Route::get('/book_taxi/{id}', 'App\Http\Controllers\PassengerController@book_taxi')->name('book_taxi');
 Route::get('/annuler_reser/{id}', 'App\Http\Controllers\PassengerController@annuler_reser')->name('annuler_reser');
-Route::get('/change_statut_driver', 'App\Http\Controllers\homeController@change_statut_driver')->name('change_statut_driver');
-Route::get('/afficher_reservations', 'App\Http\Controllers\homeController@afficher_reservations')->name('afficher_reservations');
+Route::get('/change_statut_driver', 'App\Http\Controllers\chauffeurController@change_statut_driver')->name('change_statut_driver');
+Route::get('/afficher_reservations', 'App\Http\Controllers\chauffeurController@afficher_reservations')->name('afficher_reservations');
+Route::get('/historique_driver', 'App\Http\Controllers\chauffeurController@historique_driver')->name('historique_driver');
 Route::get('/search',[homeController::class, 'search']);
 
